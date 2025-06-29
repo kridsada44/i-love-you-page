@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>I LOVE YOU 💖</title>
+  <title>LOVE RESPONSE 💖</title>
   <style>
     body {
       margin: 0;
@@ -19,11 +19,14 @@
       color: white;
     }
 
+    .fadeIn {
+      opacity: 0;
+      animation: fadeInUp 2s forwards;
+    }
+
     h1, h2, h3, .response {
       position: relative;
       z-index: 1;
-      opacity: 0;
-      animation: fadeInUp 2s forwards;
       text-align: center;
     }
 
@@ -65,12 +68,23 @@
       background: #ff4e90;
     }
 
-    #result {
-      margin-top: 30px;
-      font-size: 2rem;
-      color: #ffb3d1;
-      animation: fadeInUp 1s forwards;
+    #finalMessage {
       display: none;
+      font-size: 2.5rem;
+      text-align: center;
+      color: #ffb3d1;
+      font-weight: bold;
+      animation: fadeInUp 1s forwards;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
+      animation: fall linear infinite;
+      opacity: 0.8;
     }
 
     @keyframes fadeInUp {
@@ -82,16 +96,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
-      animation: fall linear infinite;
-      opacity: 0.8;
     }
 
     @keyframes fall {
@@ -107,41 +111,60 @@
   </style>
 </head>
 <body>
-  <h1>FEAR</h1>
-  <h2>I LOVE YOU 💖</h2>
-  <h3>Will you be mine? 💌</h3>
+  <div id="content">
+    <h1 class="fadeIn" style="animation-delay: 0.5s;">FEAR</h1>
+    <h2 class="fadeIn" style="animation-delay: 2s;">I LOVE YOU 💖</h2>
+    <h3 class="fadeIn" style="animation-delay: 4s;">Will you be mine? 💌</h3>
 
-  <div class="response">
-    <button class="btn" onclick="showAnswer(true)">YES</button>
-    <button class="btn" onclick="showAnswer(false)">NO</button>
+    <div class="response fadeIn" style="animation-delay: 6s;">
+      <button class="btn" onclick="showAnswer(true)">YES</button>
+      <button class="btn" onclick="showAnswer(false)">NO</button>
+    </div>
   </div>
 
-  <div id="result">เธอตอบแล้วนะ... เราคือของกันและกัน 💘</div>
+  <div id="finalMessage"></div>
 
   <script>
-    function createHeart() {
+    function createHeart(x, y) {
       const heart = document.createElement("div");
       heart.classList.add("heart");
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      heart.style.animationDuration = 2 + Math.random() * 2 + "s";
+      heart.style.position = "absolute";
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
+      setTimeout(() => heart.remove(), 5000);
     }
-
-    setInterval(createHeart, 200);
 
     function showAnswer(isYes) {
-      const result = document.getElementById("result");
-      if (isYes) {
-        result.textContent = "เธอตอบแล้วนะ... เราคือของกันและกัน 💘";
-      } else {
-        result.textContent = "ก็ไม่เป็นไร... อย่างน้อยฉันก็ได้บอกความรู้สึกไปแล้ว ❤️";
+      const content = document.getElementById("content");
+      const finalMessage = document.getElementById("finalMessage");
+
+      content.style.display = "none";
+      finalMessage.style.display = "block";
+      finalMessage.innerHTML = isYes
+        ? "เธอตอบแล้วนะ... เราคือของกันและกัน 💘"
+        : "ก็ไม่เป็นไร... อย่างน้อยฉันก็ได้บอกความรู้สึกไปแล้ว ❤️";
+
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const x = window.innerWidth * Math.random();
+          const y = window.innerHeight * Math.random();
+          createHeart(x, y);
+        }, i * 100);
       }
-      result.style.display = "block";
     }
+
+    setInterval(() => {
+      if (!document.getElementById("finalMessage").style.display) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+    }, 200);
   </script>
 </body>
 </html>
