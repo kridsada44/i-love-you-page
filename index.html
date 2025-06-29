@@ -19,21 +19,69 @@
       color: white;
     }
 
-    h1 {
+    h1, h2, h3, .response {
       position: relative;
       z-index: 1;
-      font-size: 2.5rem;
+      opacity: 0;
+      animation: fadeInUp 2s forwards;
       text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
       color: #ff92d0;
-      margin-bottom: 30px;
+      animation-delay: 0.5s;
     }
 
     h2 {
-      position: relative;
-      z-index: 1;
       font-size: 3rem;
-      text-align: center;
-      margin-top: 0;
+      animation-delay: 2s;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: #ffd1e3;
+      animation-delay: 4s;
+    }
+
+    .response {
+      animation-delay: 6s;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #ff6fa8;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      color: white;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #ff4e90;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 2rem;
+      color: #ffb3d1;
+      animation: fadeInUp 1s forwards;
+      display: none;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .heart {
@@ -61,6 +109,14 @@
 <body>
   <h1>FEAR</h1>
   <h2>I LOVE YOU 💖</h2>
+  <h3>Will you be mine? 💌</h3>
+
+  <div class="response">
+    <button class="btn" onclick="showAnswer(true)">YES</button>
+    <button class="btn" onclick="showAnswer(false)">NO</button>
+  </div>
+
+  <div id="result">เธอตอบแล้วนะ... เราคือของกันและกัน 💘</div>
 
   <script>
     function createHeart() {
@@ -76,6 +132,16 @@
     }
 
     setInterval(createHeart, 200);
+
+    function showAnswer(isYes) {
+      const result = document.getElementById("result");
+      if (isYes) {
+        result.textContent = "เธอตอบแล้วนะ... เราคือของกันและกัน 💘";
+      } else {
+        result.textContent = "ก็ไม่เป็นไร... อย่างน้อยฉันก็ได้บอกความรู้สึกไปแล้ว ❤️";
+      }
+      result.style.display = "block";
+    }
   </script>
 </body>
 </html>
